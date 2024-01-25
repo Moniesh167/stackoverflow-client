@@ -1,5 +1,6 @@
 .voip-wrapper {
     padding: 14px;
+    padding-top: 20px;
     position: relative;
     min-height: 100vh;
     /* lg: p-8 */
@@ -8,6 +9,7 @@
 .voip-wrapper h1 {
     font-size: large;
     font-weight: 700;
+    margin-top: 30px;
 }
 
 .voip-wrapper p {
