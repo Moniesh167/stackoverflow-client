@@ -83,7 +83,7 @@ const QuestionsDetails = () => {
     const authorId = question.userId;
     const AuthorRef = ref(database, `notifications/${authorId}`)
     const dataRef = push(AuthorRef)
-    set(dataRef, { questionId: question._id, data: `${User?.result.name} is asking for your code to edit`, isRead: false, userId: User?.result._id, id: dataRef.key, isCodeReview: true, dateTime: serverTimestamp() })
+    set(dataRef, { questionId: question._id, data: `${User?.result.name} is asking for your code to review`, isRead: false, userId: User?.result._id, id: dataRef.key, isCodeReview: true, dateTime: serverTimestamp() })
     .then(()=>{
       alert("Your request has been sent successfully.")
     })
