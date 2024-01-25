@@ -1,0 +1,127 @@
+.voip-wrapper {
+    padding: 14px;
+    position: relative;
+    min-height: 100vh;
+    /* lg: p-8 */
+}
+
+.voip-wrapper h1 {
+    font-size: large;
+    font-weight: 700;
+}
+
+.voip-wrapper p {
+    font-size: 22px;
+    font-weight: 700;
+    text-align: center;
+    padding: 12px auto;
+}
+
+.not-login {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: x-large;
+    text-align: center;
+    padding: 40px auto;
+}
+
+.users-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.call-making {
+    height: 100%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    backdrop-filter: blur(10px);
+}
+
+.call-making img {
+    width: 56px;
+}
+
+.call-making h1 {
+    font-size: 24px;
+    font-weight: 600;
+
+}
+
+@media screen and (min-width: 640px) {}
+
+.users-container {
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.title-text {
+    text-align: center;
+    padding: 12px;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.right-side {
+    display: flex;
+    justify-content: center;
+}
+
+.call-box {
+    position: relative;
+    width: 100%;
+    max-width: 560px;
+    height: fit-content;
+}
+
+.video-call {
+    border: 2px solid black;
+    max-width: 100%;
+    position: absolute;
+    right: 4px;
+    top: 4px;
+}
+
+#audio-call-container {
+    background-color: #020617;
+    position: relative;
+}
+
+#audio-call-container h1{
+    padding: 4px;
+    background-color: #0f172a;
+    border-radius: 10px;
+    width: 64px;
+    height: 64px;
+    text-align: center;
+}
+#audio-call-container img{
+    width: 40px;
+}
+
+.call-control-container{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 6px;
+    gap: 12px;
+    background-color: rgba(25, 195, 87, 0.8);
+    
+}
+.call-control{
+    padding: 2px 4px;
+    width: fit-content;
+    border-radius: 5px;
+    cursor: pointer;
+}
