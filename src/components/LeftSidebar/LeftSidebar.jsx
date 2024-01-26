@@ -13,63 +13,66 @@ const LeftSidebar = ({ isMobile, handleisMobile }) => {
   };
 
   return (
-    <div
-      className="left-sidebar"
-      style={isMobile ? isMobileStyle : notMobileStyle}
-    >
-      <nav className="side-nav">
-        <button onClick={() => handleisMobile()} className="nav-btn">
-          <NavLink to="/" className="side-nav-links" activeclassname="active">
-            <p>Home</p>
-          </NavLink>
-        </button>
-        <div className="side-nav-div">
-          <div>
-            <p>PUBLIC</p>
+    <div className="sidebar-wrapper">
+      <div
+        className="left-sidebar"
+        style={isMobile ? isMobileStyle : notMobileStyle}
+      >
+        <nav className="side-nav">
+          <button onClick={() => handleisMobile()} className="nav-btn">
+            <NavLink to="/" className="side-nav-links" activeclassname="active">
+              <p>Home</p>
+            </NavLink>
+          </button>
+          <div className="side-nav-div">
+            <div>
+              <p>PUBLIC</p>
+            </div>
+            <button onClick={() => handleisMobile()} className="nav-btn">
+              <NavLink
+                to="/Questions"
+                className="side-nav-links"
+                activeclassname="active"
+              >
+                <img src={Globe} alt="Globe" />
+                <p style={{ paddingLeft: "10px" }}> Questions </p>
+              </NavLink>
+            </button>
+            <button onClick={() => handleisMobile()} className="nav-btn">
+              <NavLink
+                to="/Tags"
+                className="side-nav-links"
+                activeclassname="active"
+                style={{ paddingLeft: "40px" }}
+              >
+                <p>Tags</p>
+              </NavLink>
+            </button>
+            <button onClick={() => handleisMobile()} className="nav-btn">
+              <NavLink
+                to="/Users"
+                className="side-nav-links"
+                activeclassname="active"
+                style={{ paddingLeft: "40px" }}
+              >
+                <p>Users</p>
+              </NavLink>
+            </button>
+            <button onClick={() => handleisMobile()} className="nav-btn">
+              <NavLink
+                to="/call"
+                className="side-nav-links"
+                activeclassname="active"
+                style={{ paddingLeft: "40px" }}
+              >
+                <p>Call</p>
+              </NavLink>
+            </button>
           </div>
-          <button onClick={() => handleisMobile()} className="nav-btn">
-            <NavLink
-              to="/Questions"
-              className="side-nav-links"
-              activeclassname="active"
-            >
-              <img src={Globe} alt="Globe" />
-              <p style={{ paddingLeft: "10px" }}> Questions </p>
-            </NavLink>
-          </button>
-          <button onClick={() => handleisMobile()} className="nav-btn">
-            <NavLink
-              to="/Tags"
-              className="side-nav-links"
-              activeclassname="active"
-              style={{ paddingLeft: "40px" }}
-            >
-              <p>Tags</p>
-            </NavLink>
-          </button>
-          <button onClick={() => handleisMobile()} className="nav-btn">
-            <NavLink
-              to="/Users"
-              className="side-nav-links"
-              activeclassname="active"
-              style={{ paddingLeft: "40px" }}
-            >
-              <p>Users</p>
-            </NavLink>
-          </button>
-          <button onClick={() => handleisMobile()} className="nav-btn">
-            <NavLink
-              to="/call"
-              className="side-nav-links"
-              activeclassname="active"
-              style={{ paddingLeft: "40px" }}
-            >
-              <p>Call</p>
-            </NavLink>
-          </button>
-        </div>
-      </nav>
+        </nav>
+      </div>
     </div>
+
   );
 };
 
