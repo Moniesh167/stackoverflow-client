@@ -51,12 +51,11 @@
   border-radius: 5px;
   
 }
-#notification-data{
-  white-space: pre-line;
-}
+
 #code-block{
   background-color: rgb(212, 212, 212);
   padding: 2px 4px;
+  white-space: pre-line;
 }
 .notification-box{
   display: flex;

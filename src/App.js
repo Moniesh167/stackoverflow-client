@@ -17,6 +17,8 @@ function App() {
   const user = useSelector(state => state.currentUserReducer?.result);
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
   const [notifications, setNotifications] = useState([]);
+  const [isInboxhidden, setIsInboxhidden] = useState(true);
+  const [notiCode, setNotiCode] = useState('');
 
   const userPresence = () => {
     let userDataRef
@@ -82,7 +84,7 @@ function App() {
     return () => {
 
     }
-  },[user])
+  }, [user])
 
   const deleteNotification = (notificationId, userId) => {
 
@@ -90,24 +92,30 @@ function App() {
     remove(notificationRef).then(() => console.log("Notification deleted.."))
   }
 
-  const cancelCodeReviewRequest = ( reviewerId,notificationId) => {
+  const cancelCodeReviewRequest = (reviewerId, notificationId) => {
     const reviewerRef = ref(database, `notifications/${reviewerId}`)
     const dataRef = push(reviewerRef)
     set(dataRef, { userId: user._id, data: `${user.name} is canceled your code review request.`, isRead: false, id: dataRef.key, isCodeReview: false, dateTime: serverTimestamp() })
     deleteNotification(notificationId, user._id)
   }
 
-  const allowCodeReviewRequest = (questionId, reviewerId,notificationId) => {
+  const allowCodeReviewRequest = (questionId, reviewerId, notificationId) => {
     getQuestionById(questionId).then(res => {
+      if (notiCode.length<3) {
+        return alert('code length must be at least 3 characters');
+      }
       const question = res.data.question;
       const reviewerRef = ref(database, `notifications/${reviewerId}`)
       const dataRef = push(reviewerRef)
-      set(dataRef, { userId: user._id, data: `Here is code of question ${question.questionTitle} you requested to ${user.name}.`, isRead: false, id: dataRef.key, isCodeReview: false, dateTime: serverTimestamp(),code:question.questionBody })
+      set(dataRef, { userId: user._id, data: `Here is code of question ${question.questionTitle} you requested to ${user.name}.`, isRead: false, id: dataRef.key, isCodeReview: false, dateTime: serverTimestamp(), code: notiCode })
       deleteNotification(notificationId, user._id)
-
+      
     }).catch(err => {
       console.log(err);
       alert(err.message);
+    }).finally(() => {
+      setNotiCode('');
+      setIsInboxhidden(true);
     })
 
   }
@@ -208,17 +216,24 @@ function App() {
                   {
                     notification.isRead === false && <div style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: 'green', marginLeft: 'auto' }}></div>
                   }
-                  <p id="notification-data">{notification.data.split('\n')[0]}</p>
-                  {notification.code && <div style={{padding:'8px'}} id="code-block" >{notification.code}</div>}
+                  <p id="notification-data">{notification.data}</p>
+                  {notification.code && <div style={{ padding: '8px' }} id="code-block" >{notification.code}</div>}
                   <div className="date-time-container">
                     {
                       new Date(notification.dateTime).toLocaleDateString('en-IN', { hour: '2-digit', minute: '2-digit', day: 'numeric', month: 'numeric', year: 'numeric' })
                     }
                   </div>
                   {
-                    notification.isCodeReview && <div className="button-container">
-                      <button onClick={() => allowCodeReviewRequest(notification.questionId, notification.userId,notification.id)} className="" id="allow-button">Allow</button>
-                      <button onClick={() => cancelCodeReviewRequest(notification.userId,notification.id)} className="" id="cancel-button">cancel</button>
+                    (!isInboxhidden && notification.isCodeReview) && <div style={{ padding: '10px', backgroundColor: '#e6eded', margin: '5px 0', borderRadius: '4px' }}>
+                      <label htmlFor="code-input">Paste your code here</label>
+                      <textarea style={{ width: '100%' }} id="code-input" value={notiCode} rows={5} onChange={(e) => setNotiCode(e.target.value)} />
+                      <button onClick={() => allowCodeReviewRequest(notification.questionId, notification.userId, notification.id)} style={{ border: 'none', backgroundColor: '#35fc03', display: 'block', padding: '3px 6px', borderRadius: '3px', cursor: 'pointer' }}>send</button>
+                    </div>
+                  }
+                  {
+                    (notification.isCodeReview && isInboxhidden) && <div className="button-container">
+                      <button onClick={() => setIsInboxhidden(false)} className="" id="allow-button">Allow</button>
+                      <button onClick={() => cancelCodeReviewRequest(notification.userId, notification.id)} className="" id="cancel-button">cancel</button>
                     </div>
                   }
                   {
