@@ -204,7 +204,7 @@ const Voip = () => {
             set(child(onGoingCallRef, '/callType'), 'audio').then(async () => {
                 const newUrl = window.location.pathname.replace('/video', '/audio');
                 setcallType('audio');
-                await client.unpublish(videoTrack).catch((err)=>console.log('Something went wrong........', err));
+                await client.unpublish(videoTrack).catch((err) => console.log('Something went wrong........', err));
                 await turnOnCamera(false);
                 setIsSwitchingCall(false);
                 navigate(newUrl, { replace: true });
@@ -223,7 +223,7 @@ const Voip = () => {
                 setIsSwitchingCall(false);
                 navigate(newUrl, { replace: true });
             }).catch(err => {
-                console.log('something went wrong',err);
+                console.log('something went wrong', err);
                 setIsSwitchingCall(false);
             })
         }
@@ -264,7 +264,7 @@ const Voip = () => {
                             const newUrl = window.location.pathname.replace('/video', '/audio');
                             navigate(newUrl, { replace: true });
                         }
-                        console.log('This is call snap',snap.val())
+                        console.log('This is call snap', snap.val())
                         setcallType(snap.val().callType)
                     }
                 })
@@ -295,7 +295,8 @@ const Voip = () => {
                                 turnOnCamera(false).then(async () => {
                                     setTimeout(() => {
                                         navigate('/call')
-                                    }, 1500);
+                                        window.location.reload();
+                                    }, 300);
                                 }).catch(err => console.error(err));
                             })
                         }
@@ -350,7 +351,7 @@ const Voip = () => {
                                 }
                             </div>
 
-                            <div  className='call-control-container absolute bottom-0 w-full flex items-center gap-3 p-4 bg-slate-950 bg-opacity-50 '>
+                            <div className='call-control-container absolute bottom-0 w-full flex items-center gap-3 p-4 bg-slate-950 bg-opacity-50 '>
                                 {
                                     (isJoined && !isSwitchingCall) && <div onClick={handleSwitchCall} className='call-control bg-blue-500 rounded-md p-1 text-3xl w-fit '>
                                         <BsArrowRepeat />
@@ -370,7 +371,7 @@ const Voip = () => {
                                         {isVideoOn ? <IoVideocam /> : <IoVideocamOff />}
                                     </div>
                                 }
-                                {isJoined && <div style={{backgroundColor:'red'}} onClick={hangCall} className='call-control bg-red-500 rounded-md p-1  cursor-pointer text-3xl w-fit'>
+                                {isJoined && <div style={{ backgroundColor: 'red' }} onClick={hangCall} className='call-control bg-red-500 rounded-md p-1  cursor-pointer text-3xl w-fit'>
                                     <IoCall />
                                 </div>}
                             </div>
