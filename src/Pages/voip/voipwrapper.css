@@ -1,9 +1,8 @@
 .voip-wrapper {
     padding: 14px;
     padding-top: 20px;
-    position: relative;
+    /* position: relative; */
     min-height: 100vh;
-    z-index: -1000;
     /* lg: p-8 */
 }
 
