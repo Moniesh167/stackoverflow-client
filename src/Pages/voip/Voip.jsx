@@ -236,22 +236,22 @@ const Voip = () => {
             token.current = callToken;
             client.on("network-quality", (network) => {
                 const qualityScale = [
-                  " unknown",
-                  " excellent.",
-                  " optimal.",
-                  " impaired communication.",
-                  " not smooth.",
-                  " poor .",
-                  " cannot communicate.",
+                    " unknown",
+                    " excellent.",
+                    " optimal.",
+                    " impaired communication.",
+                    " not smooth.",
+                    " poor .",
+                    " cannot communicate.",
                 ];
                 const downlink = network.downlinkNetworkQuality;
                 const uplink = network.uplinkNetworkQuality;
                 // quality numbers range is from 0 to 6 .
                 const qualityNumber = downlink < uplink ? uplink : downlink;
                 setLocalNetworkQuality(
-                  `Network Quality: ${qualityScale[qualityNumber]}`
+                    `Network Quality: ${qualityScale[qualityNumber]}`
                 );
-              });
+            });
 
             joinCall(callType).then(() => {
                 onValue(onGoingCallRef, async (snap) => {
@@ -341,61 +341,60 @@ const Voip = () => {
         <>
             <div>
                 <h1 className='title-text' style={{ textAlign: 'center', padding: '12px', fontSize: '22px', fontWeight: 'bold' }}>Video And Audio Call</h1>
-                <div>
-                    <div  style={{ display: 'flex', justifyItems: 'center' }}>
-                        <div  style={{ position: 'relative', width: '100%', maxWidth: '560px', height: 'fit-content' }}>
-                            <div style={{width:'100%',background:'black',display:'flex',justifyContent:'space-between', color:'white',padding:'0 5px' ,fontSize:'14px'}} >
-                                <div>{localNetworkQuality}</div>
-                                <div >status: <span style={client.connectionState === 'CONNECTED' ?{color:'green'}:{color:'red'}} >{client.connectionState.toLocaleLowerCase()}</span></div>
-                            </div>
-                            <video style={callType === 'video' && isRemoteUserJoined ? { display: 'block', width: '120px' } : { display: 'none', width: '100%' }} className='video-call' id="camera-video" ></video>
-                            <video style={callType === 'video' ? { display: 'block' } : { display: 'none' }} className={`remote-video w-full max-w-full ${callType === 'video' ? 'block' : 'hidden'} `} id="remote-video" ></video>
-                            <div id='audio-call-container' className=' bg-slate-950 relative'>
-                                {(callType === 'audio' && (callerName !== user?.displayName)) && callerName && <div style={{color:'white',width:'100%',height:'400px',backgroundColor:'#dbeafe',fontSize:'24px',display:'flex',flexDirection:'column',gap:'10px',justifyContent:'center',alignItems:'center'} } className='text-stone-50 w-full h-[400px] bg-blue-100 text-5xl flex flex-col gap-4 justify-center items-center'>
-                                    <h1>{callerName ? callerName.slice(0, 1).toUpperCase() : null}</h1>
-                                   
-                                    <img src={loadingBars} alt="bars" />
-                                </div>}
-                                {(callType === 'audio' && reciverName) && <div style={{color:'white',width:'100%',height:'400px',backgroundColor:'#dbeafe',fontSize:'24px',display:'flex',flexDirection:'column',gap:'10px',justifyContent:'center',alignItems:'center'} } className='text-stone-50 w-full h-[400px] bg-blue-100 text-5xl flex flex-col gap-4 justify-center items-center'>
-                                    <h1 className='p-2 bg-slate-900 rounded-full w-16 h-16 text-center'>{reciverName.slice(0, 1).toUpperCase()}</h1>
-                                    <img src={loadingBars} alt="bars" />
-                                </div>}
-                                {
-                                    isSwitchingCall && <div className="absolute top-0 left-0 right-0 bottom-0 bg-stone-50 flex justify-center items-center flex-col">
-                                        <img className="w-20" src={loadingIcon} alt="loading icon" />
-                                        <p>Switching call...</p>
-                                    </div>
-                                }
-                            </div>
+                <div style={{display:'flex',justifyContent:'center'}}>
+                    <div style={{ position: 'relative', width: '100%', maxWidth: '650px', height: 'fit-content' }}>
+                        <div style={{ width: '100%',maxWidth:'640px', background: 'black', display: 'flex', justifyContent: 'space-between', color: 'white', padding: '0 5px', fontSize: '14px' }} >
+                            <div>{localNetworkQuality}</div>
+                            <div >status: <span style={client.connectionState === 'CONNECTED' ? { color: 'green' } : { color: 'red' }} >{client.connectionState.toLocaleLowerCase()}</span></div>
+                        </div>
+                        <video style={callType === 'video' && isRemoteUserJoined ? { display: 'block', width: '120px' } : { display: 'none', width: '100%' }} className='video-call' id="camera-video" ></video>
+                        <video style={callType === 'video' ? { display: 'block', width: '100%', maxWidth: '100%', margin: '0 auto' } : { display: 'none' }} className={`remote-video w-full max-w-full ${callType === 'video' ? 'block' : 'hidden'} `} id="remote-video" ></video>
+                        <div id='audio-call-container' className=' bg-slate-950 relative'>
+                            {(callType === 'audio' && (callerName !== user?.displayName)) && callerName && <div style={{ color: 'white', width: '100%', height: '400px', backgroundColor: '#dbeafe', fontSize: '24px', display: 'flex', flexDirection: 'column', gap: '10px', justifyContent: 'center', alignItems: 'center' }} className='text-stone-50 w-full h-[400px] bg-blue-100 text-5xl flex flex-col gap-4 justify-center items-center'>
+                                <h1>{callerName ? callerName.slice(0, 1).toUpperCase() : null}</h1>
 
-                            <div className='call-control-container absolute bottom-0 w-full flex items-center gap-3 p-4 bg-slate-950 bg-opacity-50 '>
-                                {
-                                    (isJoined && !isSwitchingCall) && <div onClick={handleSwitchCall} className='call-control bg-blue-500 rounded-md p-1 text-3xl w-fit '>
-                                        <BsArrowRepeat />
-                                    </div>
-                                }
-                                {
-                                    (isJoined && !isSwitchingCall) && <div onClick={handleOnOffSpeaker} className='call-control bg-blue-500 rounded-md p-1 text-3xl w-fit '>
-                                        {isSpeakerOn ? <HiSpeakerWave /> : <HiSpeakerXMark />}
-                                    </div>
-                                }
-
-                                <div onClick={handleMicOnOff} className='call-control bg-blue-500 rounded-md p-1 text-3xl w-fit '>
-                                    {isAudioOn ? <BsFillMicFill /> : <BsFillMicMuteFill />}
+                                <img src={loadingBars} alt="bars" />
+                            </div>}
+                            {(callType === 'audio' && reciverName) && <div style={{ color: 'white', width: '100%', height: '400px', backgroundColor: '#dbeafe', fontSize: '24px', display: 'flex', flexDirection: 'column', gap: '10px', justifyContent: 'center', alignItems: 'center' }} className='text-stone-50 w-full h-[400px] bg-blue-100 text-5xl flex flex-col gap-4 justify-center items-center'>
+                                <h1 className='p-2 bg-slate-900 rounded-full w-16 h-16 text-center'>{reciverName.slice(0, 1).toUpperCase()}</h1>
+                                <img src={loadingBars} alt="bars" />
+                            </div>}
+                            {
+                                isSwitchingCall && <div className="absolute top-0 left-0 right-0 bottom-0 bg-stone-50 flex justify-center items-center flex-col">
+                                    <img className="w-20" src={loadingIcon} alt="loading icon" />
+                                    <p>Switching call...</p>
                                 </div>
-                                {
-                                    callType === 'video' && <div onClick={handleOnOffCamera} className='call-control bg-blue-500 rounded-md p-1 text-3xl w-fit '>
-                                        {isVideoOn ? <IoVideocam /> : <IoVideocamOff />}
-                                    </div>
-                                }
-                                {isJoined && <div style={{ backgroundColor: 'red' }} onClick={hangCall} className='call-control bg-red-500 rounded-md p-1  cursor-pointer text-3xl w-fit'>
-                                    <IoCall />
-                                </div>}
+                            }
+                        </div>
+
+                        <div className='call-control-container '>
+                            {
+                                (isJoined && !isSwitchingCall) && <div onClick={handleSwitchCall} className='call-control bg-blue-500 rounded-md p-1 text-3xl w-fit '>
+                                    <BsArrowRepeat />
+                                </div>
+                            }
+                            {
+                                (isJoined && !isSwitchingCall) && <div onClick={handleOnOffSpeaker} className='call-control bg-blue-500 rounded-md p-1 text-3xl w-fit '>
+                                    {isSpeakerOn ? <HiSpeakerWave /> : <HiSpeakerXMark />}
+                                </div>
+                            }
+
+                            <div onClick={handleMicOnOff} className='call-control bg-blue-500 rounded-md p-1 text-3xl w-fit '>
+                                {isAudioOn ? <BsFillMicFill /> : <BsFillMicMuteFill />}
                             </div>
+                            {
+                                callType === 'video' && <div onClick={handleOnOffCamera} className='call-control bg-blue-500 rounded-md p-1 text-3xl w-fit '>
+                                    {isVideoOn ? <IoVideocam /> : <IoVideocamOff />}
+                                </div>
+                            }
+                            {isJoined && <div style={{ backgroundColor: 'red' }} onClick={hangCall} className='call-control bg-red-500 rounded-md p-1  cursor-pointer text-3xl w-fit'>
+                                <IoCall />
+                            </div>}
                         </div>
                     </div>
-
                 </div>
+
+
             </div>
         </>
     )
